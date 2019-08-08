@@ -25,7 +25,7 @@ SECRET_KEY = ')@+nmv9iwe5otk$ieo81ib@nxip#bug@3g@x4pgb71_9wdmuym'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['www.site-marchand.com', '.site-marchand.fr']
+ALLOWED_HOSTS = []
 
 
 # Application definition
