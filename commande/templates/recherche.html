@@ -1,0 +1,64 @@
+<table class="user">
+	<tr>
+		<th>
+			Bonjour, {{ user.username|default:"vous n'êtes pas identifié" }}.
+			{% if user.is_authenticated %}
+			<br><a href="{% url 'commande:deconnexion' %}">se deconnecter</a>
+			{% else %}
+			<br><a href="{% url 'commande:connexion' %}">se connecter</a>
+			{% endif %}
+		</th>
+		<th>
+			{{ sous_total.nb|default:"0" }} article{{ sous_total.nb|pluralize }}
+			
+			<br><form action="{% url 'commande:panier' %}" method="post">
+					{% csrf_token %} 
+					<input type="submit" value="Panier" />
+				</form>
+		</th>
+	</tr>
+</table>
+
+<h1> Recherche d'article </h1>
+<form action="{% url 'commande:recherche' %}" method="get">
+	{% csrf_token %} 
+	{{ recherche.as_p }}
+	<input type="submit" value="rechercher" />
+</form>
+
+{% if envoi %}
+<h2>Résultats</h2>
+
+<table class="article" border=1>
+	<tr>
+		<th>REF</th>
+		<th>Désignation</th>
+		<th>Conditionnement</th>
+		<th>Prix en Euros</th>
+		<th></th>
+	</tr>
+{% for article in liste_articles %}
+	<tr>
+		<td>{{ article.reference }}</td>
+		<td>{{ article.designation }}</td>
+		<td>{{ article.conditionnement }}</td>
+		<td>{{ article.Pv }}</td>
+		<td>
+			<form action="{% url 'commande:ajout' %}" method="post">
+				{% csrf_token %} 
+				{{ quantite.as_p }}
+				<input type="hidden" name="article" value="{{ article.id }}" />
+				<input type="hidden" name="prix" value="{{ article.prix_vente }}" />
+				<input type="hidden" name="saisie" value="{{ saisie }}" />
+				<input type="submit" value="ajouter au panier" />
+			</form>
+		</td>
+	</tr>
+{% empty %}
+	<p>Aucun article trouvé.</p>
+{% endfor %}
+
+	
+{% endif %}
+
+	

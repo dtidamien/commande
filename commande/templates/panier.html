@@ -1,0 +1,66 @@
+<script type="text/javascript">
+</script>
+<table class="user">
+	<tr>
+		<th>
+			Bonjour, {{ user.username|default:"vous n'êtes pas identifié" }}.
+			{% if user.is_authenticated %}
+			<br><a href="{% url 'commande:deconnexion' %}">se deconnecter</a>
+			{% else %}
+			<br><a href="{% url 'commande:connexion' %}">se connecter</a>
+			{% endif %}
+		</th>
+		<th>
+			{{ sous_total.nb|default:"0" }} article{{ sous_total.nb|pluralize }}
+			
+			<br><form action="{% url 'commande:panier' %}" method="post">
+					{% csrf_token %} 
+					<input type="submit" value="Panier" />
+				</form>
+		</th>
+	</tr>
+</table>
+
+<h1> Votre Panier </h1>
+
+<table class="panier" border=1>
+	<tr>
+		<th>REF</th>
+		<th>Désignation</th>
+		<th>Conditionnement</th>
+		<th>Prix</th>
+		<th>Quantité</th>
+		<th>Sous total</th>
+		<th></th>
+	</tr>
+{% for panier in le_panier %}
+	<tr>
+		<td>{{ panier.reference }}</td> 
+		<td>{{ panier.designation }}</td>
+		<td>{{ panier.conditionnement }}</td>
+		<td>{{ panier.prix_unitaire }}</td>
+		<td>
+			<form action="{% url 'commande:modifier' %}" method="post">
+				{% csrf_token %}
+				<input type="number" name="quantite" min="1" max="999" value="{{ panier.quantite }}" onChange="this.form.submit()"/>
+				<input type="hidden" name="article" value="{{ panier.article_id }}" />
+			</form>
+		</td>
+		<td>{{ panier.prix }}</td>
+		<td>
+			<form action="{% url 'commande:retirer' %}" method="post">
+				{% csrf_token %} 
+				<input type="hidden" name="article" value="{{ panier.article_id }}" />
+				<input type="submit" value="supprimer" />
+			</form>
+		</td>
+	</tr>
+{% empty %}
+	<tr><p>Panier vide.</p></tr>
+{% endfor %}
+</table>
+	<br><br>total(euros) : {{ sous_total_euros }}
+	
+<br><br><a href="{% url 'commande:recherche' %}">recherche articles</a>
+<br><br><a href="#" onClick="window.open('{% url 'commande:paiement' %}')">Passer la commande</a>
+
