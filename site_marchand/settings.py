@@ -78,9 +78,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',# pour mysql,     'django.db.backends.sqlite3' pour sqlite
         'NAME': 'commande', #os.path.join(BASE_DIR, 'commande_db.sqlite3') pour sqlite
-        'USER': 'root',
-        'PASSWORD': 'g1id2gni',
-        'HOST':'',
+        'USER': 'sitemarchand',
+        'PASSWORD': 'G1id2gni!',
+        'HOST':'sitemarchand.mysql.pythonanywhere-services.com',
         'PORT':'',
     }
 }
