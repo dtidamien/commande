@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'site_marchand.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',# pour mysql,     'django.db.backends.sqlite3' pour sqlite
-        'NAME': 'commande', #os.path.join(BASE_DIR, 'commande_db.sqlite3') pour sqlite
+        'NAME': 'sitemarchand$commande', #os.path.join(BASE_DIR, 'commande_db.sqlite3') pour sqlite
         'USER': 'sitemarchand',
         'PASSWORD': 'Password1.',
         'HOST':'sitemarchand.mysql.pythonanywhere-services.com',
